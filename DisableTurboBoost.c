@@ -10,11 +10,11 @@ const uint64_t expectedFeatures  = 0x850089;
 const uint64_t disableTurboBoost = 0x4000000000;
 
 static void disable_tb(__unused void * param_not_used) {
-	// wrmsr64(0x1a0, rdmsr64(0x1a0) | disableTurboBoost);
+	wrmsr64(0x1a0, rdmsr64(0x1a0) | disableTurboBoost);
 }
 
 static void enable_tb(__unused void * param_not_used) {
-	// wrmsr64(0x1a0, rdmsr64(0x1a0) & ~disableTurboBoost);
+	wrmsr64(0x1a0, rdmsr64(0x1a0) & ~disableTurboBoost);
 }
 
 static kern_return_t start(kmod_info_t *ki, void *d) {

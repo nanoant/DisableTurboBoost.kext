@@ -1,5 +1,6 @@
 NAME := DisableTurboBoost
-TEST := /tmp/$(NAME).kext
+#KEXT := /System/Library/Extensions/$(NAME).kext
+KEXT := /tmp/$(NAME).kext
 DIR  := Contents/MacOS
 BIN  := $(DIR)/$(NAME)
 INFO := Contents/Info.plist
@@ -9,18 +10,18 @@ $(BIN): $(DIR) $(NAME).c Makefile
 
 $(DIR):; mkdir -p $(DIR)
 
-test: $(TEST)/$(BIN) $(TEST)/$(INFO)
-	sudo chown -R root:wheel $(TEST)
-	sudo kextutil -v $(TEST)
+load: $(KEXT) $(KEXT)/$(BIN) $(KEXT)/$(INFO)
+	sudo chown -R root:wheel $(KEXT)
+	sudo kextutil -v $(KEXT)
 
-untest: $(TEST)/$(BIN) $(TEST)/$(INFO)
-	sudo kextunload -v $(TEST)
+unload:
+	sudo kextunload -v $(KEXT)
 
-$(TEST):; mkdir -p $@
-$(TEST)/$(DIR):; mkdir -p $@
+$(KEXT):; mkdir -p $@
+$(KEXT)/$(DIR):; mkdir -p $@
 
-$(TEST)/$(INFO): $(TEST) $(INFO)
+$(KEXT)/$(INFO): $(KEXT) $(INFO)
 	sudo cp $(INFO) $@
 
-$(TEST)/$(BIN): $(TEST)/$(DIR) $(BIN)
+$(KEXT)/$(BIN): $(KEXT)/$(DIR) $(BIN)
 	sudo cp $(BIN) $@
