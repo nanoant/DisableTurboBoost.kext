@@ -37,22 +37,24 @@ const uint64_t expectedFeatures  = 0x850089;
 const uint64_t disableTurboBoost = 0x4000000000;
 
 static void disable_tb(__unused void * param_not_used) {
-	wrmsr64(0x1a0, rdmsr64(0x1a0) | disableTurboBoost);
+	wrmsr64(MSR_IA32_MISC_ENABLE, rdmsr64(MSR_IA32_MISC_ENABLE) | disableTurboBoost);
 }
 
 static void enable_tb(__unused void * param_not_used) {
-	wrmsr64(0x1a0, rdmsr64(0x1a0) & ~disableTurboBoost);
+	wrmsr64(MSR_IA32_MISC_ENABLE, rdmsr64(MSR_IA32_MISC_ENABLE) & ~disableTurboBoost);
 }
 
 static kern_return_t start(kmod_info_t *ki, void *d) {
+	uint64_t prev = rdmsr64(MSR_IA32_MISC_ENABLE);
 	mp_rendezvous_no_intrs(disable_tb, NULL);
-	printf("Disabled Turbo Boost (%llx)\n", rdmsr64(0x1a0));
+	printf("Disabled Turbo Boost: %llx -> %llx\n", prev, rdmsr64(MSR_IA32_MISC_ENABLE));
 	return KERN_SUCCESS;
 }
 
 static kern_return_t stop(kmod_info_t *ki, void *d) {
+	uint64_t prev = rdmsr64(MSR_IA32_MISC_ENABLE);
 	mp_rendezvous_no_intrs(enable_tb, NULL);
-	printf("Re-enabled Turbo Boost (%llx)\n", rdmsr64(0x1a0));
+	printf("Re-enabled Turbo Boost: %llx -> %llx\n", prev, rdmsr64(MSR_IA32_MISC_ENABLE));
 	return KERN_SUCCESS;
 }
 
