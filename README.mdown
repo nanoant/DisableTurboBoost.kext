@@ -17,7 +17,9 @@ This program implements modification of `MSR` CPU register responsible for *Turb
 Prerequisites
 -------------
 
-[Xcode](https://developer.apple.com/technologies/tools/) is required to compile this module.
+[Xcode](https://developer.apple.com/technologies/tools/) with *Command Line Tools* is required to compile this module.
+
+*Command Line Tools* are available as extra add-on from *Preferences > Downloads* of *Xcode* 4.3 or newer, installer option on Xcode 4.2 or older or [separate download](https://developer.apple.com/downloads). Separate download does now require *Xcode* to build this project.
 
 Usage
 -----
