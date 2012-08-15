@@ -33,8 +33,8 @@ extern void mp_rendezvous_no_intrs(
 		void (*action_func)(void *),
 		void *arg);
 
-const uint64_t expectedFeatures  = 0x850089;
-const uint64_t disableTurboBoost = 0x4000000000;
+const uint64_t expectedFeatures  = 0x850089LL;
+const uint64_t disableTurboBoost = 0x4000000000LL;
 
 static void disable_tb(__unused void * param_not_used) {
 	wrmsr64(MSR_IA32_MISC_ENABLE, rdmsr64(MSR_IA32_MISC_ENABLE) | disableTurboBoost);

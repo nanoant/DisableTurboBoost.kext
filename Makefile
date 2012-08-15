@@ -5,8 +5,18 @@ DIR  := Contents/MacOS
 BIN  := $(DIR)/$(NAME)
 INFO := Contents/Info.plist
 
+# detect current kernel architecture
+CPU  := $(shell uname -m)
+ifeq ($(CPU),i386)
+CPPFLAGS += -m32
+else
+ifeq ($(CPU),x86_64)
+CPPFLAGS += -m64
+endif
+endif
+
 $(BIN): $(DIR) $(NAME).c Makefile
-	$(CC) -Xlinker -kext -static $(NAME).c -o $@ -fno-builtin -nostdlib -lkmod -r -mlong-branch -I/System/Library/Frameworks/Kernel.framework/Headers -Wall
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(MARCH) -Xlinker -kext -static $(NAME).c -o $@ -fno-builtin -nostdlib -lkmod -r -mlong-branch -I/System/Library/Frameworks/Kernel.framework/Headers -Wall
 
 $(DIR):; mkdir -p $(DIR)
 
