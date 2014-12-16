@@ -28,6 +28,25 @@ Usage
 2. `make load` to load and disable *Turbo Boost* (will ask for admin privileges)
 3. `make unload` to unload and re-enable *Turbo Boost* (will ask for admin privileges)
 
+OS X Yosemite
+------------
+
+In OS X 10.10 (Yosemite), Apple has introduced a new security requirement called
+kext signing. (A kext is a kernel extension, or a driver, in Mac OS X).
+
+To use DisableTurboBoost, you need to disable the kext signing security
+setting:
+
+    nvram boot-args=kext-dev-mode=1
+
+It is important to note that **the kext-signing setting is global**,
+if you disable it you should be careful to only install system drivers
+from sources that you trust.
+
+Read the following article for more details:
+http://www.cindori.org/trim-enabler-and-yosemite/
+
+
 License
 -------
 
