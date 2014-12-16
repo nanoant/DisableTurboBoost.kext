@@ -25,9 +25,9 @@
  *   CPU feature using MSR register MSR_IA32_MISC_ENABLE (0x1a0)
  */
 
-#include <libkern/libkern.h>
-#include <mach/mach_types.h>
-#include <i386/proc_reg.h>
+#include <Kernel/mach/mach_types.h>
+#include <Kernel/libkern/libkern.h>
+#include <Kernel/i386/proc_reg.h>
 
 extern void mp_rendezvous_no_intrs(
 		void (*action_func)(void *),

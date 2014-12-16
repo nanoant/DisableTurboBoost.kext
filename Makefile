@@ -16,7 +16,7 @@ endif
 endif
 
 $(BIN): $(DIR) $(NAME).c Makefile
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(MARCH) -Xlinker -kext -static $(NAME).c -o $@ -fno-builtin -nostdlib -lkmod -r -mlong-branch -I/System/Library/Frameworks/Kernel.framework/Headers -Wall
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(MARCH) -Xlinker -kext -static $(NAME).c -o $@ -fno-builtin -nostdlib -lkmod -r -Wall
 
 $(DIR):; mkdir -p $(DIR)
 
