@@ -15,8 +15,10 @@ CPPFLAGS += -m64
 endif
 endif
 
+KERNELDIR := $(shell xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/Kernel.framework/Headers
+
 $(BIN): $(DIR) $(NAME).c Makefile
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(MARCH) -Xlinker -kext -static $(NAME).c -o $@ -fno-builtin -nostdlib -lkmod -r -Wall
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(MARCH) -Xlinker -kext --include-directory=$(KERNELDIR) -static $(NAME).c -o $@ -fno-builtin -nostdlib -lkmod -r -Wall
 
 $(DIR):; mkdir -p $(DIR)
 
